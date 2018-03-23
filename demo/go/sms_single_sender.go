@@ -7,6 +7,24 @@ import (
 	"net/http"
 )
 
+/*
+{
+    "result": 0,
+    "errmsg": "OK",
+    "ext": "",
+    "sid": "xxxxxxx",
+    "fee": 1
+
+}
+*/
+type SmsSingleSenderResult struct {
+	Result int    `json:"result"`
+	ErrMsg string `json:"errmsg"`
+	Ext    string `json:"ext"`
+	Sid    string `json:"sid"`
+	Fee    int    `json:"fee"`
+}
+
 // SmsSingleSender实现单发短信
 type SmsSingleSender struct {
 	appid  int
@@ -81,13 +99,19 @@ func (ss *SmsSingleSender) Send(
 	data["extend"] = extend
 	data["ext"] = ext
 	wholeUrl := fmt.Sprintf("%s?sdkappid=%d&random=%d", ss.url, ss.appid, random)
+	fmt.Println(data)
 	body, _ := json.Marshal(data)
+	fmt.Println(body)
+
 	req, err := http.NewRequest("POST", wholeUrl, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("make http req error %v", err)
 	}
 	result := &SmsSingleSenderResult{}
+	fmt.Printf("before apiRequest....\n")
 	err = apiRequest(req, result)
+	fmt.Printf("Result: [%d] Msg: [%s] Ext: [%s] Sid: [%s] Fee: [%d]\n",
+		result.Result, result.ErrMsg, result.Ext, result.Sid, result.Fee)
 	return result, err
 }
 

@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	appid  = 1400012345
-	appkey = "12345678911112abcdefg"
+	appid  = 1400076771
+	appkey = "d68645c3af8aad3cf73941710ca70cdf"
 )
 
 var (
@@ -15,22 +15,29 @@ var (
 	phoneNumber3 = "13576666666"
 )
 
+func TestMydemo(t *testing.T) {
+    t.Log("This is test...")
+}
+
 // 普通单发
+// 注：发送的内容必须与模板内容一致，否则会提示内容与模板不匹配
+
 func TestSmsSingleSend(t *testing.T) {
 	sender := NewSmsSingleSender(appid, appkey)
-	res, err := sender.Send(0, "86", phoneNumber1, "您注册的验证码：1234", "", "")
+	res, err := sender.Send(0, "86", phoneNumber1, "您好！欢迎您！", "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Logf("%+v", res)
 }
 
+
+/*
 // 指定模板单发
-// 假设短信模板 id 为 1，模板内容为：测试短信，{1}，{2}，{3}，上学。
 func TestSmsSingleSendWithParam(t *testing.T) {
-	tmplId := 7839
+	tmplId := 97868 // 欢迎短信模板ID号
 	sender := NewSmsSingleSender(appid, appkey)
-	params := []string{"指定模板单发", "深圳", "小明"}
+	params := []string{"李大锤"}
 	res, err := sender.SendWithParam(0, "86", phoneNumber1, tmplId, params, "", "", "")
 	if err != nil {
 		t.Fatal(err)
@@ -95,3 +102,4 @@ func TestSmsVoicePromptSend(t *testing.T) {
 	}
 	t.Logf("%+v", res)
 }
+*/

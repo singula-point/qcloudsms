@@ -7,6 +7,13 @@ import (
 	"net/http"
 )
 
+type SmsVoicePromptSenderResult struct {
+	Result int    `json:"result"`
+	Errmsg string `json:"errmsg"`
+	Ext    string `json:"ext"`
+	Callid string `json:"callid"`
+}
+
 type SmsVoicePromptSender struct {
 	appid  int
 	appkey string
